@@ -1,0 +1,63 @@
+{
+  "expo": {
+    "name": "gamew",
+    "slug": "gamew",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "scheme": "com.gamew",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gamew",
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.824703805654-qrm65sa31vp8mmqokdisn2lesi0dlp99"
+            ]
+          }
+        ]
+      },
+      "android": {
+        "adaptiveIcon": {
+          "foregroundImage": "./assets/images/adaptive-icon.png",
+          "backgroundColor": "#ffffff"
+        },
+        "package": "com.gamew"
+      },
+      "web": {
+        "bundler": "metro",
+        "output": "static",
+        "favicon": "./assets/images/favicon.png"
+      },
+      "plugins": [
+        "expo-router"
+      ],
+      "experiments": {
+        "typedRoutes": true
+      },
+      "extra": {
+        "router": {
+          "origin": false
+        },
+        "eas": {
+          "projectId": "2b2169c9-4e34-4159-a6c8-a718950532bb"
+        }
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2b2169c9-4e34-4159-a6c8-a718950532bb"
+      }
+    },
+    "android": {
+      "package": "com.gamew"
+    }
+  }
+}

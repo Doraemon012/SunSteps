@@ -1,50 +1,37 @@
-# Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+![Screenshot_from_2024-08-02_16-08-18-removebg-preview](https://github.com/user-attachments/assets/b4b81108-1287-4801-b8e5-3e8fd53cf50f)
 
-## Get started
 
-1. Install dependencies
 
-   ```bash
-   npm install
-   ```
+Welcome to **SunSteps**! The ultimate pedometer game app that combines fitness tracking with exciting wagering and step challenges.
 
-2. Start the app
+## Overview
 
-   ```bash
-    npx expo start
-   ```
+**SunSteps** helps you stay active and motivated by turning your daily steps into fun challenges. Track your steps, place bets on your progress, and compete for rewards in a vibrant, sunny environment!
 
-In the output, you'll find options to open the app in a
+## Features
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **Step Tracking** 🚶‍♂️: Monitor your daily steps and progress.
+- **Wagering** 💰: Place bets on your step goals and earn rewards.
+- **Step Challenges** ☀️: Participate in exciting step-based challenges and compete with friends.
+- **Rewards** 🏆: Earn rewards based on your performance and achievements.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Getting Started
 
-## Get a fresh project
+To get started with **SunSteps**, follow these steps:
 
-When you're ready, run:
+1. **Clone the Repository**:
+    ```bash
+    git clone https://github.com/Doraemon012/SunSteps.git
+    cd
+    ```
 
-```bash
-npm run reset-project
-```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Usage
 
-## Learn more
+1. **Sign Up/Log In**: Create an account or log in to access the app.
+2. **Track Steps**: Sync your pedometer data and start tracking your steps.
+3. **Place Bets**: Set wagers on your daily or weekly step goals.
+4. **Join Challenges**: Enter step challenges and compete with others.
+5. **Earn Rewards**: Achieve your goals and earn rewards based on your performance.
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

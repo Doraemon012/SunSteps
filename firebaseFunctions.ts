@@ -3,15 +3,48 @@ import { firestore } from "./firebaseConf";
 import { collection, onSnapshot, query, doc, getDoc, setDoc, Firestore, Timestamp, runTransaction, arrayUnion } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const addUserToFirestore = async (user: any) => {
+// export const addUserToFirestore = async (user: any) => {
+//   try {
+//     const userRef = doc(firestore, "users", user.id);
+//     await setDoc(userRef, user);
+//     console.log("User added with ID: ", user.id);
+//   } catch (e) {
+//     console.error("Error adding user: ", e);
+//   }
+// }
+
+// firebaseFunctions.ts
+
+// firebaseFunctions.ts
+export const addUserToFirestore = async (user: any): Promise<boolean> => {
   try {
     const userRef = doc(firestore, "users", user.id);
-    await setDoc(userRef, user);
+
+    // add user with initial currency
+    await setDoc(userRef, {
+      ...user,
+      currency: 1000
+    });
+
     console.log("User added with ID: ", user.id);
+    return true;
   } catch (e) {
     console.error("Error adding user: ", e);
+    return false;
   }
-}
+};
+
+  // Check if user exists in Firestore
+
+
+  // if (!userRef.exists) {
+  //   // Set initial currency balance for new users
+  //   const initialCurrency = 1000; // Set the initial currency amount here
+  //   await userRef.set({
+  //     ...user,
+  //     currency: initialCurrency,
+  //   });
+  // }
 
 export const getGames = (updateGamesCallback: (games: IGame[]) => void) => {
   const gamesRef = collection(firestore, 'games');
@@ -65,7 +98,7 @@ export interface IGame {
   maxPlayers?: number;
   minWager: number;
   maxWager: number;
-  winningAmount: number; 
+  winningAmount: number;
 
 }
 
@@ -110,7 +143,7 @@ export const joinGame = async (gameId: string, userId: string) => {
 
   try {
     // Use a transaction to ensure atomic increment
-    await runTransaction(firestore, async (transaction : any) => {
+    await runTransaction(firestore, async (transaction: any) => {
       const gameDoc = await transaction.get(gameRef);
       if (!gameDoc.exists()) {
         throw "Document does not exist!";
@@ -152,6 +185,9 @@ export const updateGameStepsWithTimestamp = async (gameId: string, playerId: str
 
     console.log(`Steps updated for player ${playerId} in game ${gameId}`);
   })
+
+
+
 
 
   // updateGameStepsWithTimestamp('u6i0pStLQHd9hAKboYg7', 'player1', 5000, new Date());
@@ -198,7 +234,7 @@ export const updateGameStepsWithTimestamp = async (gameId: string, playerId: str
 //   stepsGoal: 10000, // Goal for the number of steps
 //   timeGoal: 60, // Time goal in minutes
 //   steps: {
-    
+
 //   },
 // };
 // addGame(stepCountingGame, stepCountingGame.creator);
@@ -272,6 +308,29 @@ export const getLeaderboard = (gameId: string, updateLeaderboardCallback: (leade
 // }
 
 // reset();
+
+
+export const updateUserCurrency = async (userId: string, amount: number) => {
+  const userRef = doc(firestore, "users", userId);
+
+  try {
+    await runTransaction(firestore, async (transaction) => {
+      const userDoc = await transaction.get(userRef);
+      if (!userDoc.exists()) {
+        throw "User does not exist!";
+      }
+
+      const userData = userDoc.data();
+      const newCurrency = (userData.currency || 0) + amount;
+
+      transaction.update(userRef, { currency: newCurrency });
+
+      console.log(`Currency updated for user ${userId}: ${newCurrency}`);
+    });
+  } catch (e) {
+    console.error("Error updating currency: ", e);
+  }
+};
 
 
 

@@ -177,11 +177,12 @@ import { Pedometer } from 'expo-sensors';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getGameById, updateGameStepsWithTimestamp } from '@/firebaseFunctions';
+import { getGameById, updateGameStepsWithTimestamp, updateUserCurrency } from '@/firebaseFunctions';
 import { Link, useLocalSearchParams } from 'expo-router';
 import { StepCountingGame } from '@/firebaseFunctions';
 import CircularStepProgress from '@/components/CircularStepProgress';
 import CountdownTimer from '@/components/CountdownTimer';
+import Toast from 'react-native-toast-message';
 
 export default function PedometerScreen() {
     const params = useLocalSearchParams();
@@ -201,7 +202,9 @@ export default function PedometerScreen() {
     useEffect(() => {
         const initialize = async () => {
             // const playerId = await getPlayerId();
+
             const playerId = "userId"; // TODO: Replace with actual user ID
+
             setCurrentPlayerId(playerId);
             if (Platform.OS === 'android') {
                 const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACTIVITY_RECOGNITION);
@@ -284,6 +287,32 @@ export default function PedometerScreen() {
         }
     };
 
+    // const endGame = async (winnerId: string) => {
+    //     setIsGameActive(false);
+    //     await fetchGame(gameId); // Fetch updated game data
+
+    //     if (gameState) {
+    //         let maxSteps = 0;
+    //         let winner = '';
+
+    //         for (const playerId in gameState.steps) {
+    //             const playerSteps = gameState.steps[playerId].steps;
+    //             if (playerSteps > maxSteps) {
+    //                 maxSteps = playerSteps;
+    //                 winner = playerId;
+    //                 setGameEnded(true);
+    //                 setWinner(winner);
+    //             }
+    //         }
+
+    //         if (winner) {
+    //             setGameState(prevState => ({ ...prevState, winnerId: winner, isActive: false } as StepCountingGame));
+    //         }
+    //     }
+    // };
+
+
+
     const endGame = async (winnerId: string) => {
         setIsGameActive(false);
         await fetchGame(gameId); // Fetch updated game data
@@ -304,6 +333,25 @@ export default function PedometerScreen() {
 
             if (winner) {
                 setGameState(prevState => ({ ...prevState, winnerId: winner, isActive: false } as StepCountingGame));
+
+                // Update the winner's currency
+                const winningAmount = gameState.winningAmount; // Define the winning amount
+                try {
+                    await updateUserCurrency(winner, winningAmount);
+                    console.log(`Currency updated for winner ${winner}`);
+
+                                    // Show toast message
+                Toast.show({
+                    type: 'success',
+                    text1: 'You won!',
+                    text2: `You just received ${winningAmount} Suns!`,
+
+                    // TODO: Add an icon/ svg image
+                });
+                
+                } catch (error) {
+                    console.error(`Failed to update currency for winner ${winner}:`, error);
+                }
             }
         }
     };

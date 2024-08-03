@@ -323,6 +323,7 @@ import { getGames, IGame } from '@/firebaseFunctions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GameCard } from '@/components/GameCard';
 import { ScrollView } from 'react-native';
+import AppBar from '@/components/AppBar';
 
 const { width } = Dimensions.get('window');
 
@@ -333,6 +334,7 @@ export default function HomeScreen() {
   useEffect(() => {
     (async () => {
       const user = await AsyncStorage.getItem("@user");
+      console.log(JSON.parse(user as string), " user from index.tsx "); // Add this line to log the retrieved user data
       if (user === null) {
         <Redirect href="./signup" />
       } else {
@@ -352,8 +354,13 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+
+<AppBar coins={getuser?.coins || 0} onProfilePress={() => { }} />
+
+
       <ScrollView style={{ flex: 1, padding: 8, rowGap: 32 }}>
-        <ThemedView style={{ flexDirection: 'row', alignItems: 'center' , marginVertical: 32 }}>
+        {/* <ThemedText type='title'>{}</ThemedText> */}
+        <ThemedView style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 32 }}>
           <ThemedView style={{ flexDirection: 'column' }}>
             <ThemedText type='title'>Hi,{getuser?.username || 'User'}.</ThemedText>
           </ThemedView>
@@ -363,7 +370,7 @@ export default function HomeScreen() {
 
           <ThemedText type='title'>Explore Games</ThemedText>
 
-          <ThemedView style={{ flex: 1, flexDirection: 'row', columnGap: 14 , marginVertical: 16}}>
+          <ThemedView style={{ flex: 1, flexDirection: 'row', columnGap: 14, marginVertical: 16 }}>
             <ThemedView style={{ flex: 1, flexDirection: 'column', rowGap: 12 }}>
               {games.slice(0, Math.ceil(games.length / 2)).map((game) => (
                 <GameCard key={game.id} game={game} />

@@ -17,6 +17,14 @@ import { signOut } from "firebase/auth";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   // conf
+  apiKey: "AIzaSyB_9eSB3MS2LAuPryezoR4V1VNiGxRglVQ",
+  authDomain: "wagering-game-app.firebaseapp.com",
+  projectId: "wagering-game-app",
+  storageBucket: "wagering-game-app.appspot.com",
+  messagingSenderId: "371448353837",
+  appId: "1:371448353837:web:01f97fb8b0455de83ed4a4",
+  measurementId: "G-9HTG04SV2R"
+
 };
 
 // Initialize Firebase

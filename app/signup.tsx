@@ -401,6 +401,9 @@ export default function SignUpScreen() {
     // app/signup.tsx
     async function getUserInfo(token: any) {
         if (!token) return;
+        
+
+
         try {
             const response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
                 headers: {

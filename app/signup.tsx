@@ -358,9 +358,16 @@ export default function SignUpScreen() {
 
     async function handleSignInWithGoogle() {
         const user = await AsyncStorage.getItem("@user");
+        console.log("User: ", user);
+
+        // response?.type === 'success' ? console.log("Response: ", response) : console.log("Response: ", response?.type);
+
         if (!user) {
             if (response?.type === 'success') {
                 await getUserInfo(response.authentication?.accessToken);
+                Alert.alert("User signed in successfully as " + userInfo);
+                // Alert.prompt("hu")
+                console.log("User signed in successfully as ", userInfo);
                 // redirect to home screen
                 router.replace('/(tabs)/home');
             }
@@ -369,8 +376,34 @@ export default function SignUpScreen() {
         }
     }
 
+    // async function getUserInfo(token: any) {
+    //     if (!token) return;
+    //     try {
+    //         const response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`
+    //             }
+    //         });
+    //         const user = await response.json();
+    //         await AsyncStorage.setItem("@user", JSON.stringify(user));
+    //         await addUserToFirestore(user);
+    //         console.log("\n calling getUserInfo", user);
+    //         setUserInfo(user);
+    //         if (Platform.OS !== 'web') {
+    //             WebBrowser.dismissBrowser();
+    //         }
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
+
+
+    // app/signup.tsx
     async function getUserInfo(token: any) {
         if (!token) return;
+        
+
+
         try {
             const response = await fetch("https://www.googleapis.com/userinfo/v2/me", {
                 headers: {
@@ -378,9 +411,17 @@ export default function SignUpScreen() {
                 }
             });
             const user = await response.json();
+            console.log("User: hai ye ", user);
             await AsyncStorage.setItem("@user", JSON.stringify(user));
+
             await addUserToFirestore(user);
-            console.log("\n calling getUserInfo", user);
+
+            // if (isUserAdded) {
+            //     console.log("User successfully added to Firestore");
+            // } else {
+            //     console.log("Failed to add user to Firestore");
+            // }
+            
             setUserInfo(user);
             if (Platform.OS !== 'web') {
                 WebBrowser.dismissBrowser();
@@ -452,9 +493,9 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         backgroundColor: '#F5F7F8',
-        borderTopLeftRadius: 0, 
+        borderTopLeftRadius: 0,
         borderTopRightRadius: 165,
-        paddingVertical: 64, 
+        paddingVertical: 64,
         // padding: 16,
         justifyContent: 'center',
         alignItems: 'center',
@@ -484,7 +525,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: 16,
         fontSize: 16,
-        
+
     },
     tempButton: {
         backgroundColor: '#88D66C',

@@ -358,9 +358,16 @@ export default function SignUpScreen() {
 
     async function handleSignInWithGoogle() {
         const user = await AsyncStorage.getItem("@user");
+        console.log("User: ", user);
+
+        // response?.type === 'success' ? console.log("Response: ", response) : console.log("Response: ", response?.type);
+
         if (!user) {
             if (response?.type === 'success') {
                 await getUserInfo(response.authentication?.accessToken);
+                Alert.alert("User signed in successfully as " + userInfo);
+                // Alert.prompt("hu")
+                console.log("User signed in successfully as ", userInfo);
                 // redirect to home screen
                 router.replace('/(tabs)/home');
             }
@@ -401,13 +408,17 @@ export default function SignUpScreen() {
                 }
             });
             const user = await response.json();
+            console.log("User: hai ye ", user);
             await AsyncStorage.setItem("@user", JSON.stringify(user));
-            const isUserAdded = await addUserToFirestore(user);
-            if (isUserAdded) {
-                console.log("User successfully added to Firestore");
-            } else {
-                console.log("Failed to add user to Firestore");
-            }
+
+            await addUserToFirestore(user);
+
+            // if (isUserAdded) {
+            //     console.log("User successfully added to Firestore");
+            // } else {
+            //     console.log("Failed to add user to Firestore");
+            // }
+            
             setUserInfo(user);
             if (Platform.OS !== 'web') {
                 WebBrowser.dismissBrowser();

@@ -330,6 +330,8 @@ const { width } = Dimensions.get('window');
 export default function HomeScreen() {
   const [games, setGames] = useState<IGame[]>([]);
   const [getuser, setUser] = useState(null);
+  const [coins, setCoins] = useState(0);
+
 
   useEffect(() => {
     (async () => {
@@ -338,10 +340,17 @@ export default function HomeScreen() {
       if (user === null) {
         <Redirect href="./signup" />
       } else {
-        setUser(JSON.parse(user));
+        // setUser(JSON.parse(user));
+        const parsedUser = JSON.parse(user);
+
+        setUser(parsedUser);
+        setCoins(parsedUser.coins || 0); // Assuming the user object has a coins property
       }
     })();
   }, []);
+
+  console.log(getuser, " getuser ")
+  console.log(coins, " coins ")
 
   useEffect(() => {
     const unsubscribe = getGames(setGames);
@@ -355,7 +364,7 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
 
-<AppBar coins={getuser?.coins || 0} onProfilePress={() => { }} />
+      <AppBar coins={getuser?.coins || 0} onProfilePress={() => { }} />
 
 
       <ScrollView style={{ flex: 1, padding: 8, rowGap: 32 }}>
